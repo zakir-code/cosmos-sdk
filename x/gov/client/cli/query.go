@@ -82,7 +82,7 @@ $ %s query gov proposal 1
 				return err
 			}
 
-			return clientCtx.PrintObjectLegacy(res.Proposal)
+			return clientCtx.PrintProto(&res.Proposal)
 		},
 	}
 
