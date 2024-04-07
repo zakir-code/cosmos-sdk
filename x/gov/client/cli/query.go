@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/cosmos/cosmos-sdk/x/gov/types/v1beta1"
 	"github.com/spf13/cobra"
 
 	"github.com/cosmos/cosmos-sdk/client"
@@ -64,7 +65,7 @@ $ %s query gov proposal 1
 			if err != nil {
 				return err
 			}
-			queryClient := v1.NewQueryClient(clientCtx)
+			queryClient := v1beta1.NewQueryClient(clientCtx)
 
 			// validate that the proposal id is a uint
 			proposalID, err := strconv.ParseUint(args[0], 10, 64)
@@ -75,13 +76,13 @@ $ %s query gov proposal 1
 			// Query the proposal
 			res, err := queryClient.Proposal(
 				cmd.Context(),
-				&v1.QueryProposalRequest{ProposalId: proposalID},
+				&v1beta1.QueryProposalRequest{ProposalId: proposalID},
 			)
 			if err != nil {
 				return err
 			}
 
-			return clientCtx.PrintProto(res.Proposal)
+			return clientCtx.PrintObjectLegacy(res.Proposal)
 		},
 	}
 

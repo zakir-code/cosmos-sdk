@@ -284,24 +284,18 @@ $ %s tx gov vote 1 yes --from mykey
 			}
 
 			// Find out which vote option user chose
-			byteVoteOption, err := v1.VoteOptionFromString(govutils.NormalizeVoteOption(args[1]))
-			if err != nil {
-				return err
-			}
-
-			metadata, err := cmd.Flags().GetString(flagMetadata)
+			byteVoteOption, err := v1beta1.VoteOptionFromString(govutils.NormalizeVoteOption(args[1]))
 			if err != nil {
 				return err
 			}
 
 			// Build vote message and run basic validation
-			msg := v1.NewMsgVote(from, proposalID, byteVoteOption, metadata)
+			msg := v1beta1.NewMsgVote(from, proposalID, byteVoteOption)
 
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
 
-	cmd.Flags().String(flagMetadata, "", "Specify metadata of the vote")
 	flags.AddTxFlagsToCmd(cmd)
 
 	return cmd
